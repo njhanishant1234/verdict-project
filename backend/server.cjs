@@ -101,14 +101,13 @@ function javaLiteral(problemId, input) {
       type: "String",
     };
   }
-  if (problemId === "add-two-integers") {
-    return {
-        args: `${input[0]}, ${input[1]}`,
-        type: "int"
-    };
-}
 
- 
+  if (problemId === "fizzbuzz") {
+    return {
+      args: String(input[0]),
+      type: "List<String>",
+    };
+  }
 
   throw new Error(
     "Unsupported Java problem: " + problemId
@@ -131,10 +130,10 @@ function javaSerialize(problemId, variable) {
   if (problemId === "palindrome") {
     return `${variable} ? "true" : "false"`;
   }
-  if (problemId === "add-two-integers") {
-    return variable;
-}
 
+  if (problemId === "fizzbuzz") {
+    return `jsonList(${variable})`;
+  }
 
   throw new Error(
     "Unsupported Java problem: " + problemId
@@ -146,15 +145,15 @@ function javaSerialize(problemId, variable) {
    ========================================================= */
 
 function makeJavaCode(studentCode, problem, tests) {
-
   /*
-   * LeetCode-style submission:
+   * LeetCode users should normally submit:
    *
    * class Solution {
    *     ...
    * }
    *
-   * Never allow public class Solution.
+   * Never allow public class Solution because Main.java
+   * must contain the public Main class.
    */
 
   studentCode = studentCode.replace(
@@ -164,7 +163,6 @@ function makeJavaCode(studentCode, problem, tests) {
 
   const calls = tests
     .map((test) => {
-
       const literal = javaLiteral(
         problem.id,
         test.input
@@ -189,7 +187,8 @@ function makeJavaCode(studentCode, problem, tests) {
             System.out.println(
                 "{\"output\":" +
                 ${serializer} +
-                ",\"ms\":" + ms + ",\"error\":null,\"stdout\":\"\"}"
+                ",\"ms\":" + ms +
+                ",\"error\":null,\"stdout\":\"\"}"
             );
 
         } catch (Exception e) {
@@ -300,6 +299,7 @@ ${calls}
 }
 `;
 }
+
 /* =========================================================
    C++ INPUT LITERALS
    ========================================================= */
@@ -327,14 +327,14 @@ function cppLiteral(problemId, input) {
       type: "string",
     };
   }
-  if (problemId === "add-two-integers") {
-    return {
-        args: `${input[0]}, ${input[1]}`,
-        type: "int"
-    };
-}
 
- 
+  if (problemId === "fizzbuzz") {
+
+    return {
+      args: String(input[0]),
+      type: "int",
+    };
+  }
 
   throw new Error(
     "Unsupported C++ problem: " + problemId
@@ -359,7 +359,10 @@ function cppSerialize(problemId) {
     return 'output ? "true" : "false"';
   }
 
-  
+  if (problemId === "fizzbuzz") {
+    return "jsonStringVector(output)";
+  }
+
   throw new Error(
     "Unsupported C++ problem: " + problemId
   );
