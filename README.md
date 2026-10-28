@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Verdict — Online Judge
 
 A full-featured algorithmic online judge web application built with React, Tailwind CSS, Lucide icons, and Vite.
@@ -80,7 +79,3 @@ npm run server
 
 - **JavaScript**: Sandboxed locally inside a Web Worker. Runs instantly with zero network requests and a 3-second execution timeout.
 - **Python / Java / C++**: Code is compiled and run securely via the local Node proxy (`server.cjs`), which connects to the Piston engine.
-=======
-# verdict-project
-this is online code judge
->>>>>>> 5fbea23415a4b8d7764620f5339e1062144a5bec
