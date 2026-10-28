@@ -1,3 +1,4 @@
+
 {
   "name": "verdict-judge",
   "private": true,
@@ -5,10 +6,10 @@
   "type": "module",
   "scripts": {
     "start": "concurrently -n \"vite,proxy\" -c \"cyan,magenta\" \"npm run dev\" \"npm run server\"",
-    "dev": "vite",
+    "dev": "vite --host 0.0.0.0",
     "build": "vite build",
-    "preview": "vite preview",
-    "server": "node server.cjs"
+    "preview": "vite preview --host 0.0.0.0",
+    "server": "node --watch ../backend/server.cjs"
   },
   "dependencies": {
     "lucide-react": "^0.475.0",
